@@ -29,7 +29,6 @@ func main() {
 
 	// 迁移数据模型到数据库
 	db.AutoMigrate(&Delivery{})
-
 	// 创建Gin实例
 	r := gin.Default()
 
@@ -66,27 +65,18 @@ func main() {
 
 		c.JSON(http.StatusOK, deliveries)
 	})
+
 	r.POST("/api/deliveries", func(c *gin.Context) {
-		name := c.Query("name")
+		var newDelivery Delivery
 
-		var deliveries []Delivery
-		result := db.Where("name = ?", name).Find(&deliveries)
-
-		if result.Error != nil {
-			c.JSON(http.StatusNotFound, gin.H{
-				"error": "无法查找到信息",
-			})
+		if err := c.ShouldBindJSON(&newDelivery); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		if len(deliveries) == 0 {
-			c.JSON(http.StatusNotFound, gin.H{
-				"error": "快递查找不到",
-			})
-			return
-		}
+		db.Create(&newDelivery)
 
-		c.JSON(http.StatusOK, deliveries)
+		c.JSON(http.StatusOK, newDelivery)
 	})
 
 	// 处理查询快递信息的请求
