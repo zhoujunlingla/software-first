@@ -14,6 +14,15 @@ type Delivery struct {
 	TrackingNumber string
 	Status         string
 	Name           string
+	senderPhone    string
+	senderProvince string
+	senderCity     string
+	itemType       string
+	paymentMethod  string
+	itemWeight     string
+	expressCompany string
+	itemVolume     string
+	remark         string
 }
 
 var db *gorm.DB
