@@ -6,7 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 type Delivery struct {
@@ -14,15 +17,12 @@ type Delivery struct {
 	TrackingNumber string
 	Status         string
 	Name           string
-	senderPhone    string
-	senderProvince string
-	senderCity     string
-	itemType       string
-	paymentMethod  string
-	itemWeight     string
-	expressCompany string
-	itemVolume     string
-	remark         string
+	SenderPhone    string
+	SenderProvince string
+	SenderCity     string
+	ItemWeight     string
+	ItemVolume     string
+	Remark         string
 }
 
 var db *gorm.DB
@@ -52,31 +52,13 @@ func main() {
 	})
 
 	// 处理录入快递信息的请求
-	r.GET("/api/deliveries", func(c *gin.Context) {
-		name := c.Query("name")
-
-		var deliveries []Delivery
-		result := db.Where("name = ?", name).Find(&deliveries)
-
-		if result.Error != nil {
-			c.JSON(http.StatusNotFound, gin.H{
-				"error": "无法查找到信息",
-			})
-			return
-		}
-
-		if len(deliveries) == 0 {
-			c.JSON(http.StatusNotFound, gin.H{
-				"error": "快递查找不到",
-			})
-			return
-		}
-
-		c.JSON(http.StatusOK, deliveries)
-	})
-
 	r.POST("/api/deliveries", func(c *gin.Context) {
+		trackingNumber := generateTrackingNumber()
+		status := generateStatus()
+
 		var newDelivery Delivery
+		newDelivery.TrackingNumber = trackingNumber
+		newDelivery.Status = status
 
 		if err := c.ShouldBindJSON(&newDelivery); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -89,9 +71,6 @@ func main() {
 	})
 
 	// 处理查询快递信息的请求
-	// 处理根据名称查询快递信息的请求
-	// 处理根据运单号查询快递信息的请求
-	// 处理根据运单号查询快递信息的请求
 	r.GET("/api/deliveries/:trackingNumber", func(c *gin.Context) {
 		trackingNumber := c.Param("trackingNumber")
 
@@ -117,4 +96,17 @@ func main() {
 
 	// 启动Gin服务器
 	r.Run(":8000")
+}
+
+// 生成随机的五位数运单号
+func generateTrackingNumber() string {
+	rand.Seed(time.Now().UnixNano())
+	return strconv.Itoa(rand.Intn(90000) + 10000)
+}
+
+// 生成随机的状态
+func generateStatus() string {
+	statuses := []string{"运输中", "未发货", "已送达"}
+	rand.Seed(time.Now().UnixNano())
+	return statuses[rand.Intn(len(statuses))]
 }

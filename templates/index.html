@@ -1,5 +1,3 @@
-<!-- templates/index.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,111 +8,122 @@
 <body>
 <div class="container">
     <h1>快递录入和查询系统</h1>
-
-    <div id="add-delivery-form" class="form">
-        <h2>录入快递信息</h2>
-        <div class="form-group">
-            <label for="tracking-number">运单号:</label>
-            <input type="text" id="tracking-number" class="input-field">
+    <h2>寄方信息</h2>
+    <div class="left-container">
+        <div id="add-delivery-form" class="form">
+            <div class="form-group">
+                <label for="name" class="required">姓名:</label>
+                <input type="text" id="name" class="input-field">
+            </div>
+            <div class="form-group">
+                <label for="senderPhone" class="required">联系电话:</label>
+                <input type="text" id="senderPhone" class="input-field">
+            </div>
+            <div class="form-group">
+                <label for="senderProvince" class="required">省市区:</label>
+                <input type="text" id="senderProvince" class="input-field">
+            </div>
+            <div class="form-group">
+                <label for="senderCity" class="required">详细地址</label>
+                <input type="text" id="senderCity" class="input-field">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="status">状态:</label>
-            <input type="text" id="status" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="name">姓名:</label>
-            <input type="text" id="name" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="senderPhone">联系电话:</label>
-            <input type="text" id="senderPhone" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="senderProvince">省市区:</label>
-            <input type="text" id="senderProvince" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="senderCity">详细地址</label>
-            <input type="text" id="senderCity" class="input-field">
-        </div>
-
-        <div class="form-group">
-            <label for="itemType">物品类型</label>
-            <input type="text" id="itemType" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="paymentMethod">付款方式</label>
-            <input type="text" id="paymentMethod" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="itemWeight">物品重量</label>
-            <input type="text" id="itemWeight" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="itemVolume">物品体积</label>
-            <input type="text" id="itemVolume" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="expressCompany">快递公司</label>
-            <input type="text" id="expressCompany" class="input-field">
-        </div>
-        <div class="form-group">
-            <label for="remark">备注</label>
-            <input type="text" id="remark" class="input-field">
-        </div>
-
-        <button onclick="addDelivery()" class="button">提交</button>
     </div>
 
-    <div id="search-delivery-form" class="form">
-        <h2>查询快递信息</h2>
-        <div class="form-group">
-            <label for="search-tracking-number">运单号:</label>
-            <input type="text" id="search-tracking-number" class="input-field">
-        </div>
-        <button onclick="searchDelivery()" class="button">查询</button>
-    </div>
+        <h2> 快递信息 </h2>
+        <div class = "right-container">
 
-    <div id="delivery-info">
-        <h2>快递信息</h2>
-        <div id="delivery-result" class="delivery-table"></div>
-    </div>
+            <div class="form-group">
+                <label for="itemType">物品类型</label>
+                <select id="itemType" class="input-field">
+                    <option value="零食">零食</option>
+                    <option value="运动器械">运动器械</option>
+                    <option value="电子用品">电子用品</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">付款方式</label>
+                <select id="paymentMethod" class="input-field">
+                    <option value="现金">现金</option>
+                    <option value="支付宝或微信">支付宝或微信</option>
+                    <option value="银行卡">银行卡</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="itemWeight" class="required">物品重量</label>
+                <select id="itemWeight" class="input-field">
+                    <option value="小于10kg">小于10kg</option>
+                    <option value="10kg-30kg">10kg-30kg</option>
+                    <option value="大于30kg">大于30kg</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="itemVolume">物品体积</label>
+                <select id="itemVolume" class="input-field">
+                    <option value="小">小</option>
+                    <option value="中">中</option>
+                    <option value="大">大</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="expressCompany">快递公司</label>
+                <select id="expressCompany" class="input-field">
+                    <option value="京东">京东</option>
+                    <option value="美团">美团</option>
+                    <option value="菜鸟">菜鸟</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="remark">备注</label>
+                <input type="text" id="remark" class="input-field">
+            </div>
+        </div>
+            <div>
+                <button onclick="addDelivery()" class="button">提交</button>
+            </div>
+
+            <div id="search-delivery-form" class="form">
+                <h2>查询快递信息</h2>
+                <div class="form-group">
+                    <label for="search-tracking-number">运单号:</label>
+                    <input type="text" id="search-tracking-number" class="input-field">
+                </div>
+
+                <button onclick="searchDelivery()" class="button">查询</button>
+            </div>
+
+            <div id="delivery-info">
+                <h2>快递信息</h2>
+                <div id="delivery-result" class="delivery-table"></div>
+            </div>
 </div>
 
 
+
+
 <script>
-    // 前端代码
     function addDelivery() {
-        var trackingNumber = document.getElementById("tracking-number").value;
-        var status = document.getElementById("status").value;
         var name = document.getElementById("name").value;
         var senderPhone = document.getElementById("senderPhone").value;
         var senderProvince = document.getElementById("senderProvince").value;
         var senderCity = document.getElementById("senderCity").value;
-        var itemType = document.getElementById("itemType").value;
-        var paymentMethod = document.getElementById("paymentMethod").value;
-        var itemWeight = document.getElementById("itemWeight").value;
-        var expressCompany = document.getElementById("expressCompany").value;
-        var itemVolume = document.getElementById("itemVolume").value;
         var remark = document.getElementById("remark").value;
 
-        if (trackingNumber.trim() === "" || status.trim() === "" || name.trim() === ""|| senderPhone.trim() === "" || senderProvince.trim() ==="" || senderCity.trim() === "" || itemWeight.trim() === "") {
+        if (
+            name.trim() === " "||
+            senderPhone.trim() === "" ||
+            senderProvince.trim() === "" ||
+            senderCity.trim() === ""
+        ) {
             alert("请输入有效的快递信息");
             return;
         }
 
         var data = {
-            "trackingNumber": trackingNumber,
-            "status": status,
             "name": name,
             "senderPhone":senderPhone,
             "senderProvince ":senderProvince,
             "senderCity" : senderCity,
-            "itemType" :itemType,
-            "paymentMethod ":paymentMethod,
-            "itemWeight":itemWeight,
-            "expressCompany ":expressCompany,
-            "itemVolume":itemVolume,
             "remark ":remark,
         };
 
@@ -175,7 +184,6 @@
                 alert("快递信息查询失败: " );
             });
     }
-
 </script>
 </body>
 </html>
